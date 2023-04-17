@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, Route, Switch, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import Price from './price';
+import Chart from './chart';
 
 const Loader = styled.span`
   text-align : center;
@@ -140,7 +142,7 @@ useEffect(() => {
   return(
     <Container>
     <Header>
-      <Title>{state?.name || null}</Title>
+      <Title>{state?.name ? state.name : loading ? "Loading" : info?.name}</Title>
     </Header>
 
     {loading ? (<Loader>Loading...</Loader>) : 
@@ -171,6 +173,14 @@ useEffect(() => {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <Switch>
+            <Route path={`/${coinId}/price`}>
+              <Price/>
+            </Route>
+            <Route path={`/${coinId}/chart`}>
+              <Chart/>
+            </Route>
+          </Switch>
         </>
 
     }
