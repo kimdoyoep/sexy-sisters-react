@@ -3,6 +3,7 @@ import { fetchCoinHistory } from './Api';
 import ApexChart from "react-apexcharts";
 
 
+
 interface ChartProps {
   coinId : string;
 }
@@ -27,8 +28,8 @@ export default function Chart({coinId} : ChartProps) {
       type='line' 
       series={[
         {
-          name : "hello",
-          data : data?.slice(0, 14).map((price) => Number(price.close)) as number[],
+          name : "price",
+          data : data?.slice(0, 22).map((price) => Number(price.close)) as number[],
         }
       ]}
       options={{
@@ -38,6 +39,13 @@ export default function Chart({coinId} : ChartProps) {
           toolbar: {
             show: false,
           }
+        },   
+        theme: {
+          mode: 'dark'
+        },
+        xaxis: {
+          categories: data?.map((price) => new Date(price.time_close * 1000).toISOString()),
+          type: "datetime"
         }
       }}/>
       }
