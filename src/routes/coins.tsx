@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import { fetchCoins } from './Api';
 import { Helmet } from 'react-helmet';
+import { useSetRecoilState } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 const Title = styled.h1`
 color : ${porps => porps.theme.accentColor};
@@ -20,6 +22,10 @@ const Header = styled.header`
   display : flex;
   justify-content : center;
   align-items : center;
+  button {
+    margin-top : 8px;
+    margin-left : 20px;
+  }
 `;
 
 const CoinList = styled.ul`
@@ -64,12 +70,13 @@ interface ICoin {
 }
 
 interface ICoinsProps {
-  toggleDark : () => void;
 }
 
-export default function Coins({toggleDark} : ICoinsProps) {
+export default function Coins({} : ICoinsProps) {
 
   const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const setterFn = useSetRecoilState(isDarkAtom)
+  const toggleDarkAtom = () => setterFn(prev => !prev)
 
   // const [coins, setCoins] = useState<ICoin[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -92,7 +99,7 @@ export default function Coins({toggleDark} : ICoinsProps) {
 
       <Header>
         <Title>coins</Title>
-        <button onClick={toggleDark}>Toggle Mode</button>
+        <button onClick={toggleDarkAtom}>Toggle Mode</button>
       </Header>
 
       {isLoading ? (

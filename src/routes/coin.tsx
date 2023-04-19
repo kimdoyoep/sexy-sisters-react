@@ -76,10 +76,9 @@ const Tab = styled.span<{isActive : boolean}>`
 `;
 
 interface ICoinProps {
-  isDark : boolean;
 }
 
-export default function Coin({isDark} : ICoinProps) {
+export default function Coin({} : ICoinProps) {
 
   interface RouteParams { 
     coinId : string;
@@ -237,7 +236,7 @@ export default function Coin({isDark} : ICoinProps) {
               <Price/>
             </Route>
             <Route path={`/${coinId}/chart`}>
-              <Chart isDark={isDark} coinId={coinId}/>
+              <Chart coinId={coinId}/>
             </Route>
           </Switch>
         </>
