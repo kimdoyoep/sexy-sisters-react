@@ -15,12 +15,19 @@ export default function ToDoList() {
   //   console.log(toDo);
   // }; 
 
-  const {register, watch} = useForm();
-  console.log(watch())
+  const {register, handleSubmit} = useForm();
+  const onValid = (data:any) => {
+    console.log(data);
+  }
   return(
     <div>
-      <form>
-        <input {...register("Email")} placeholder='Email'/>
+      <form onSubmit={handleSubmit(onValid)}> 
+        <input {...register("email", {required : true})} placeholder="Email" />
+        <input {...register("firstName", {required : true})} placeholder="First Name" />
+        <input {...register("lastName", {required : true})} placeholder="Last Name" />
+        <input {...register("username", {required : true})} placeholder="Username" />
+        <input {...register("password", {required : true})} placeholder="Password" />
+        <input {...register("password1", {required : true})} placeholder="Password1" />
         <button>Add</button>
       </form>
     </div>
