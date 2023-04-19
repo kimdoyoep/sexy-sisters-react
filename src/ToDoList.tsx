@@ -23,18 +23,22 @@ interface IForm {
   username: string;
   password: string;
   checkingPassword: string;
+  extraError?: string;
   };
 
-  const {register, watch, handleSubmit, formState:{ errors }} = useForm<IForm>({
+  const {register, handleSubmit, formState:{ errors }, setError} = useForm<IForm>({
     defaultValues:{
       email: "@naver.com"
     }
   });
-  const onValid = (data:any) => {
-    console.log(data);
+  const onValid = (data : IForm) => {
+    if(data.password !== data.checkingPassword) {
+      setError("checkingPassword", {message : "Password are not the same"}, {shouldFocus:true})
+    }
+    setError("extraError", {message : "Server offline"})
   }
   return(
-    <div>
+    <div style={{color : "white"}}>
       <form style={{display: "flex", flexDirection : "column"}} onSubmit={handleSubmit(onValid)}> 
         <input {...register("email", {
           required: "Email is required",
@@ -46,7 +50,10 @@ interface IForm {
           placeholder="Email" />
           <span>{errors?.email?.message as string}</span>
 
-        <input {...register("firstName", { required: "Fist Name is required" })} placeholder="First Name" />
+        <input {...register("firstName", {
+          required: "Fist Name is required",
+          validate: (value) => value.includes("yupgy") ? "no yupgy allowed" : true,
+          })} placeholder="First Name" />
         <span>{errors?.firstName?.message as string}</span>
 
         <input {...register("lastName", {required : "Last Name is required"})} placeholder="Last Name" />
@@ -55,12 +62,22 @@ interface IForm {
         <input {...register("username", {required : "Usermame is required"})} placeholder="Username" />
         <span>{errors?.username?.message as string}</span>
 
-        <input {...register("password", {required : "Password is required", minLength : 5})} placeholder="Password" />
+        <input {...register("password", {required : "Password is required",
+        minLength : {
+          value : 5,
+          message : "Your password is too short",
+        }
+        })} placeholder="Password" />
         <span>{errors?.password?.message as string}</span>
         
-        <input {...register("checkingPassword", {required : "Checking Password is required", minLength : 5 })} placeholder="Checking Password" />
+        <input {...register("checkingPassword", {required : "Checking Password is required",
+        minLength : {
+          value : 5,
+          message : "Your password is too short"
+        } })} placeholder="Checking Password" />
         <span>{errors?.checkingPassword?.message as string}</span>
         <button>Add</button>
+        <span style={{color : "white"}}>{errors?.extraError?.message}</span>
       </form>
     </div>
   )
