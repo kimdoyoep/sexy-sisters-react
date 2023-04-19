@@ -5,7 +5,12 @@ export default function ToDo({text, category, id}: IToDo) {
 
   const setToDo = useSetRecoilState(toDoState);
   const onClick = (newCategory:IToDo["category"]) => {
-
+    setToDo((oldToDos) => {
+      const targetIndex = oldToDos.findIndex(toDo => toDo.id === id);
+      const oldToDo = oldToDos[targetIndex];
+      const newToDo = {text, id, category: newCategory}
+      return oldToDos;
+    })
   }
 
   return(
