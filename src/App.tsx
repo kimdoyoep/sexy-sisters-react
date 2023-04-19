@@ -36,7 +36,6 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   line-height: 1;
   font-family: 'Nanum Myeongjo', serif;
-  background: black;
 }
 menu, ol, ul {
   list-style: none;
