@@ -1,5 +1,22 @@
-import { createGlobalStyle } from 'styled-components';
-import ToDoList from './components/ToDoList';
+import styled, { createGlobalStyle } from 'styled-components';
+import { motion } from "framer-motion"
+
+const Wrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+`;
+
+const Box = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 10px;
+`;
+
 const Globalstyle = createGlobalStyle`
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cormorant:wght@300&family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
@@ -65,7 +82,18 @@ function App() {
   return (
     <>
       <Globalstyle />
-      <ToDoList/>
+      <Wrapper>
+        <Box
+          initial={{ scale: 0 }}
+          animate={{ rotate: 180, scale: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+            duration: 2,
+          }}
+          />
+      </Wrapper>
     </>
   );
 }
