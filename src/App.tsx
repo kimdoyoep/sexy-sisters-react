@@ -1,22 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import { motion } from "framer-motion"
 
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: black;
-`;
-
-const Box = styled(motion.div)`
-  width: 200px;
-  height: 200px;
-  background-color: white;
-  border-radius: 10px;
-`;
-
 const Globalstyle = createGlobalStyle`
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cormorant:wght@300&family=Do+Hyeon&family=Nanum+Myeongjo&display=swap');
@@ -78,31 +62,72 @@ a {
 }
 `;
 
-const MyVars = {
-  start: {
-    scale: 0
-  },
+const Wrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+`;
 
-  end: {
+const Box = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const boxVariants = {
+  start:{
+    opacity: 0,
+    scale: 0.5,
+  },
+  end:{
+    opacity: 1,
     scale: 1,
-    rotateZ: 360,
     transition: {
+      duration: 0.5,
       type: "spring",
-      delay: 0.5,
+      bounce: 0.5, 
+      delayChildren: 0.5,
+      staggerChildren: 0.1,
     }
   }
 }
+
+const Circle = styled(motion.div)`
+  background: teal;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+`;
+
+const circleVariants = {
+  start:{
+    opacity: 0,
+  },
+  end:{
+    opacity: 1,
+  }
+}
+
 
 function App() {
   return (
     <>
       <Globalstyle />
       <Wrapper>
-        <Box
-            variants={MyVars}
-            initial="start"
-            animate="end"
-          />
+        <Box variants={boxVariants} initial="start" animate="end" >
+          <Circle variants={circleVariants}/>
+          <Circle variants={circleVariants}/>
+          <Circle variants={circleVariants}/>
+          <Circle variants={circleVariants}/>
+        </Box>
       </Wrapper>
     </>
   );
