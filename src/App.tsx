@@ -78,20 +78,30 @@ a {
 }
 `;
 
+const MyVars = {
+  start: {
+    scale: 0
+  },
+
+  end: {
+    scale: 1,
+    rotateZ: 360,
+    transition: {
+      type: "spring",
+      delay: 0.5,
+    }
+  }
+}
+
 function App() {
   return (
     <>
       <Globalstyle />
       <Wrapper>
         <Box
-          initial={{ scale: 0 }}
-          animate={{ rotate: 180, scale: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-            duration: 2,
-          }}
+            variants={MyVars}
+            initial="start"
+            animate="end"
           />
       </Wrapper>
     </>
