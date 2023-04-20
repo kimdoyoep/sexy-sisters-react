@@ -83,38 +83,9 @@ const Box = styled(motion.div)`
 `;
 
 const boxVariants = {
-  start:{
-    opacity: 0,
-    scale: 0.5,
-  },
-  end:{
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      type: "spring",
-      bounce: 0.5, 
-      delayChildren: 0.5,
-      staggerChildren: 0.1,
-    }
-  }
+
 }
 
-const Circle = styled(motion.div)`
-  background: teal;
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-`;
-
-const circleVariants = {
-  start:{
-    opacity: 0,
-  },
-  end:{
-    opacity: 1,
-  }
-}
 
 
 function App() {
@@ -122,11 +93,11 @@ function App() {
     <>
       <Globalstyle />
       <Wrapper>
-        <Box variants={boxVariants} initial="start" animate="end" >
-          <Circle variants={circleVariants}/>
-          <Circle variants={circleVariants}/>
-          <Circle variants={circleVariants}/>
-          <Circle variants={circleVariants}/>
+        <Box
+        drag
+        whileDrag={{background: "blue"}}
+        whileHover={{ scale: 2, rotateZ: 90 }}
+        whileTap={{ scale: 1, borderRadius: "100px"}} >
         </Box>
       </Wrapper>
     </>
