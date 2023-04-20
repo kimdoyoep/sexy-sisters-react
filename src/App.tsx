@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { motion } from "framer-motion"
+import { motion, useMotionValue } from "framer-motion"
 
 const Globalstyle = createGlobalStyle`
 
@@ -89,15 +89,16 @@ const boxVariants = {
 
 
 function App() {
+  const x = useMotionValue(0);
   return (
     <>
       <Globalstyle />
       <Wrapper>
         <Box
-        drag
-        whileDrag={{background: "blue"}}
-        whileHover={{ scale: 2, rotateZ: 90 }}
-        whileTap={{ scale: 1, borderRadius: "100px"}} >
+        drag="x"
+        dragSnapToOrigin
+        style={{x: x}}
+        >
         </Box>
       </Wrapper>
     </>
