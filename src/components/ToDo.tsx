@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { IToDo, toDoState } from './Atom';
+import { Category, IToDo, toDoState } from './Atom';
 
 export default function ToDo({text, category, id}: IToDo) {
 
@@ -15,9 +15,9 @@ export default function ToDo({text, category, id}: IToDo) {
   return(
     <li>
       <span>{text}</span>
-      {category !== "TO_DO" && <button onClick={() => onClick("TO_DO")}>To Do</button>}
-      {category !== "DOING" && <button onClick={() => onClick("DOING")}>Doing</button>}
-      {category !== "DONE" && <button onClick={() => onClick("DONE")}>Done</button>}
+      {category !== Category.TO_DO && <button onClick={() => onClick(Category.TO_DO)}>To Do</button>}
+      {category !== Category.DOING && <button onClick={() => onClick(Category.DOING)}>Doing</button>}
+      {category !== Category.DONE && <button onClick={() => onClick(Category.DONE)}>Done</button>}
     </li>
   )
 }
