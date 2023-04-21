@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { motion, useMotionValue, useTransform } from "framer-motion"
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion"
+import { useEffect } from 'react';
 
 const Globalstyle = createGlobalStyle`
 
@@ -62,8 +63,8 @@ a {
 }
 `;
 
-const Wrapper = styled.div`
-  height: 100vh;
+const Wrapper = styled(motion.div)`
+  height: 200vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -90,7 +91,9 @@ const boxVariants = {
 
 function App() {
   const x = useMotionValue(0);
-  const potato = useTransform(x, [-800, 0, 800], [2, 1, 0])
+  const rotateZ = useTransform(x, [-800, 800], [360, -360])
+  const {scrollYProgress} = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 5])
   return (
     <>
       <Globalstyle />
@@ -98,7 +101,7 @@ function App() {
         <Box
         drag="x"
         dragSnapToOrigin
-        style={{x: x, scale: potato}}
+        style={{x: x, rotateZ, scale}}
         >
         </Box>
       </Wrapper>
