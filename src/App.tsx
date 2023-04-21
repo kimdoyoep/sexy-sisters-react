@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { motion, useMotionValue } from "framer-motion"
+import { motion, useMotionValue, useTransform } from "framer-motion"
 
 const Globalstyle = createGlobalStyle`
 
@@ -90,6 +90,7 @@ const boxVariants = {
 
 function App() {
   const x = useMotionValue(0);
+  const potato = useTransform(x, [-800, 0, 800], [2, 1, 0])
   return (
     <>
       <Globalstyle />
@@ -97,7 +98,7 @@ function App() {
         <Box
         drag="x"
         dragSnapToOrigin
-        style={{x: x}}
+        style={{x: x, scale: potato}}
         >
         </Box>
       </Wrapper>
