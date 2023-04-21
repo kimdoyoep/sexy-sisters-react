@@ -67,7 +67,7 @@ const Wrapper = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   background: black;
 `;
@@ -75,47 +75,61 @@ const Wrapper = styled(motion.div)`
 const Box = styled(motion.div)`
   width: 200px;
   height: 200px;
-  background-color: white;
+  background: white;
   border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  color: black;
 `;
 
-const boxVariants = {
-  initial: {
-    opacity: 0,
+const box = {
+  invisible: {
+    x: 500,
     scale: 0,
-  },
+    opacity:0
+  }, 
   visible: {
-    opacity: 1,
+    x: 0,
     scale: 1,
-    rotateZ: 360,
+    opacity:1,
+    transition:{
+      duration: 1
+    }
   },
-  leaving: {
-    opacity: 0,
+  exits: {
+    x: -500,
     scale: 0,
-    y: 50,
+    opacity:0,
+    transition:{
+      duration: 1
+    }
   },
-};
+}
 
 function App() {
-
-  const [showing, setShowing] = useState(false);
-  const toggleShowing = () => setShowing((prev) => !prev);
-
+  const [visible, setVisible] = useState(1);
+  const nextPlease = () => setVisible((prev) => (prev === 6) ? 6 : prev + 1)
+  const previousPlease = () => setVisible((prev) => (prev === 1) ? 1 : prev - 1)
   return (
     <>
       <Globalstyle />
       <Wrapper>
-        <button onClick={toggleShowing}>Click</button>
-        <AnimatePresence>{showing ?
-        <Box
-        variants={boxVariants}
-        initial="initial"
-        animate="visible"
-        exit="leaving"
-        /> 
-        : null
-        }
+        <AnimatePresence>
+          {[1, 2, 3, 4, 5, 6].map(i =>
+            i === visible ?
+            <Box
+            variants={box}
+            initial="invisible"
+            animate="visible"
+            exit="exits"
+            key={i}
+            >{i}
+            </Box> : null)},
         </AnimatePresence>
+        <button style={{position : "absolute", marginTop : 300}} onClick={nextPlease}>next</button>
+        <button style={{position : "absolute", marginTop : 350}} onClick={previousPlease}>previous</button>
       </Wrapper>
     </>
   );
