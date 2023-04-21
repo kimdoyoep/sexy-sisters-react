@@ -1,6 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion"
-import { useEffect } from 'react';
+import { AnimatePresence, motion, useMotionValue, useScroll, useTransform } from "framer-motion"
+import { useEffect, useState } from 'react';
 
 const Globalstyle = createGlobalStyle`
 
@@ -64,7 +64,7 @@ a {
 `;
 
 const Wrapper = styled(motion.div)`
-  height: 200vh;
+  height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -77,33 +77,45 @@ const Box = styled(motion.div)`
   height: 200px;
   background-color: white;
   border-radius: 40px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
 `;
 
 const boxVariants = {
-
-}
-
-
+  initial: {
+    opacity: 0,
+    scale: 0,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotateZ: 360,
+  },
+  leaving: {
+    opacity: 0,
+    scale: 0,
+    y: 50,
+  },
+};
 
 function App() {
-  const x = useMotionValue(0);
-  const rotateZ = useTransform(x, [-800, 800], [360, -360])
-  const {scrollYProgress} = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 5])
+
+  const [showing, setShowing] = useState(false);
+  const toggleShowing = () => setShowing((prev) => !prev);
+
   return (
     <>
       <Globalstyle />
       <Wrapper>
+        <button onClick={toggleShowing}>Click</button>
+        <AnimatePresence>{showing ?
         <Box
-        drag="x"
-        dragSnapToOrigin
-        style={{x: x, rotateZ, scale}}
-        >
-        </Box>
+        variants={boxVariants}
+        initial="initial"
+        animate="visible"
+        exit="leaving"
+        /> 
+        : null
+        }
+        </AnimatePresence>
       </Wrapper>
     </>
   );
